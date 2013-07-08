@@ -38,7 +38,7 @@ let s:guisep = '#303030'
 
 let s:N1 = s:swap ? [ s:guibg , '#00dfff' , s:termbg , 45 ] : [ s:guibg , '#080808' , 45 , s:termbg ]
 let s:N2 = [ '#ff5f00' , s:guibg, 202 , s:termbg ]
-let s:N3 = [ '#767676' , s:guibg, 243 , s:termbg ]
+let s:N3 = [ '#767676' , s:guibg, 7 , s:termbg ]
 let g:airline#themes#simple#normal = {
       \ 'mode':           [ s:N1[0]   , s:N1[1] , s:N1[2]   , s:N1[3]  , 'bold' ] ,
       \ 'mode_separator': s:swap
@@ -56,7 +56,7 @@ let g:airline#themes#simple#normal_modified = {
 
 let s:I1 = s:swap ? [ s:guibg, '#5fff00' , s:termbg , 82 ] : [ s:guibg, '#080808' , 82 , s:termbg ]
 let s:I2 = [ '#ff5f00' , s:guibg, 202 , s:termbg ]
-let s:I3 = [ '#767676' , s:guibg, 243 , s:termbg ]
+let s:I3 = [ '#767676' , s:guibg, 7 , s:termbg ]
 let g:airline#themes#simple#insert = {
       \ 'mode':           [ s:I1[0]   , s:I1[1] , s:I1[2]   , s:I1[3] , 'bold' ] ,
       \ 'mode_separator': s:swap
