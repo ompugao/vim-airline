@@ -22,6 +22,7 @@ call s:check_defined('g:airline_paste_symbol', (exists('g:airline_powerline_font
 call s:check_defined('g:airline_theme', 'dark')
 call s:check_defined('g:airline_exclude_filenames', ['DebuggerWatch','DebuggerStack','DebuggerStatus'])
 call s:check_defined('g:airline_exclude_filetypes', [])
+call s:check_defined('g:airline_window_override_funcrefs', [])
 
 call s:check_defined('g:airline_mode_map', {
       \ 'n'  : 'NORMAL',
@@ -38,7 +39,7 @@ function! s:init()
   if !s:airline_initialized
     call airline#extensions#load()
     call airline#update_externals()
-    call airline#highlight(['normal'])
+    call airline#load_theme(g:airline_theme)
     call s:check_defined('g:airline_section_a', '%{g:airline_current_mode_text}')
     call s:check_defined('g:airline_section_b', '%{g:airline_externals_fugitive}')
     call s:check_defined('g:airline_section_c', g:airline_externals_bufferline)
@@ -49,6 +50,19 @@ function! s:init()
     let s:airline_initialized = 1
   endif
 endfunction
+
+function! s:get_airline_themes(a, l, p)
+  let files = split(globpath(&rtp, 'autoload/airline/themes/'.a:a.'*'), "\n")
+  return map(files, 'fnamemodify(v:val, ":t:r")')
+endfunction
+function! s:airline_theme(...)
+  if a:0
+    call airline#load_theme(a:1)
+  else
+    echo g:airline_theme
+  endif
+endfunction
+command! -nargs=? -complete=customlist,<sid>get_airline_themes AirlineTheme call <sid>airline_theme(<f-args>)
 
 augroup airline
   au!
