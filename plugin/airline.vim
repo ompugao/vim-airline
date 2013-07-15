@@ -22,6 +22,7 @@ call s:check_defined('g:airline_paste_symbol', (exists('g:airline_powerline_font
 call s:check_defined('g:airline_theme', 'dark')
 call s:check_defined('g:airline_exclude_filenames', ['DebuggerWatch','DebuggerStack','DebuggerStatus'])
 call s:check_defined('g:airline_exclude_filetypes', [])
+call s:check_defined('g:airline_exclude_preview', 0)
 call s:check_defined('g:airline_window_override_funcrefs', [])
 
 call s:check_defined('g:airline_mode_map', {
@@ -40,7 +41,7 @@ function! s:init()
     call airline#extensions#load()
     call airline#update_externals()
     call airline#load_theme(g:airline_theme)
-    call s:check_defined('g:airline_section_a', '%{g:airline_current_mode_text}')
+    call s:check_defined('g:airline_section_a', '%{g:airline_current_mode_text} %{&paste ? g:airline_paste_symbol." " : ""}')
     call s:check_defined('g:airline_section_b', '%{g:airline_externals_fugitive}')
     call s:check_defined('g:airline_section_c', g:airline_externals_bufferline)
     call s:check_defined('g:airline_section_gutter', '')

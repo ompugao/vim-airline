@@ -1,5 +1,6 @@
 " vim: ts=2 sts=2 sw=2 fdm=indent
 let s:is_win32term = (has('win32') || has('win64')) && !has('gui_running')
+let s:lastmode = ''
 
 let s:airline_highlight_map = {
       \ 'mode'           : 'Al2',
@@ -31,7 +32,8 @@ function! airline#load_theme(name)
   let g:airline_theme = a:name
   let inactive_colors = g:airline#themes#{g:airline_theme}#inactive "also lazy loads the theme
   call airline#highlight(['inactive'], '_inactive')
-  call airline#highlight(['normal'])
+  let s:lastmode = ''
+  call airline#update_highlight()
 endfunction
 
 function! airline#highlight(modes, ...)
@@ -59,6 +61,9 @@ function! s:is_excluded_window()
       return 1
     endif
   endfor
+  if g:airline_exclude_preview && &previewwindow
+    return 1
+  endif
   return 0
 endfunction
 
@@ -112,7 +117,7 @@ function! airline#update_statusline(active)
 
   let sl = l:mode_color
   if a:active
-    let sl.='%{airline#update_highlight()} '.s:get_section('a').' %{&paste ? g:airline_paste_symbol." " : ""}'
+    let sl.='%{airline#update_highlight()} '.s:get_section('a').' '
     let sl.=l:mode_sep_color
     let sl.=a:active ? g:airline_left_sep : g:airline_left_alt_sep
     let sl.=l:info_color
@@ -140,7 +145,6 @@ function! airline#update_statusline(active)
   call setwinvar(winnr(), '&statusline', sl)
 endfunction
 
-let s:lastmode = ''
 let g:airline_current_mode_text = ''
 function! airline#update_highlight()
   let l:m = mode()
